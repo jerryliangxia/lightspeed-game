@@ -17,7 +17,6 @@ public class ThreadTheNeedleController : MonoBehaviour
     
     private Coroutine _textFadeCoroutine;
     private HashSet<Collider2D> _triggeredObjects;
-    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
 
     private const float FadeOutTime = 1.5f;
     public TextMeshProUGUI bonusPointsMessage;
@@ -52,7 +51,7 @@ public class ThreadTheNeedleController : MonoBehaviour
 
         _triggeredObjects.Add(other);
         
-        // Fixes issue of hit box being inactive
+        // Fixes issue of hit box being inactive when game object is destroyed
         if (transform.parent.gameObject.activeSelf)
         {
             StartCoroutine(CheckThreadTheNeedle());

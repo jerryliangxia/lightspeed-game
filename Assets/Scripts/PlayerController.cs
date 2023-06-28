@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -50,12 +45,11 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
+    // Handle death of player
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Instantiate the explosion effect at the collision position
         Instantiate(explosionEffect, gameObject.transform.position, Quaternion.identity);
-        
-        print("From Explosion: " + GameController.Instance.isLevelingUp);
         
         // Play the "Hand Gun 1" sound effect
         MusicClass.PlayExplosion();

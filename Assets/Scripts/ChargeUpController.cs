@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -114,7 +112,6 @@ public class ChargeUpController : MonoBehaviour
     {
         GameController.Instance.LevelUp();
         GameController.Instance.isLevelingUp = true; // For planet prefabs
-        player.GetComponent<CircleCollider2D>().isTrigger = true;
         
         // Control color rendering
         var gainParticleEffectMainModule = _particleSystemCollider.main;
@@ -153,7 +150,6 @@ public class ChargeUpController : MonoBehaviour
         }
 
         player.GetComponent<MeshRenderer>().material.SetColor(EmissionColor, endColor);
-        player.GetComponent<CircleCollider2D>().isTrigger = false;
         GameController.Instance.isLevelingUp = false; // For planet prefabs
     }
 }

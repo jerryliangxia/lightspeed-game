@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileSpitter : MonoBehaviour
+public class ProjectileLauncher : MonoBehaviour
 {
     // Projectile array
     public List<GameObject> projectiles;
@@ -22,7 +22,7 @@ public class ProjectileSpitter : MonoBehaviour
     private const int Delay = 5; // For amount of time projectile exists before death
     
     // Rendering
-    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+    private static readonly int CosmicEmissionColor = Shader.PropertyToID("_EmissionColor");
 
     private void Start()
     {
@@ -66,7 +66,7 @@ public class ProjectileSpitter : MonoBehaviour
     
             // Set the initial velocity of the projectile to move in the random direction with the random speed
             projectile.GetComponent<Rigidbody2D>().velocity = direction * speed;
-    
+            
             StartCoroutine(GrowProjectile(projectile));
         }
     }
@@ -77,10 +77,11 @@ public class ProjectileSpitter : MonoBehaviour
         yield return new WaitForSeconds(Delay);
 
         // Deactivate the game object
-        projectile.GetComponent<MeshRenderer>().material.SetColor(EmissionColor, Color.white);
+        projectile.GetComponent<MeshRenderer>().material.SetColor(CosmicEmissionColor, Color.white);
         projectile.SetActive(false);
     }
     
+    // Makes the projectile grow from the center; the closer to the center the smaller the size
     private IEnumerator GrowProjectile(GameObject projectile)
     {
         var initialScale = projectile.transform.localScale;

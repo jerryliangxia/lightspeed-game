@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -37,7 +34,7 @@ public class GameController : MonoBehaviour
         Instance = this;
 
         // Set public variables
-        emissionRate = 0.4f;
+        emissionRate = Constants.StartEmissionRate;
 
         Destroy(save);
     }
@@ -75,7 +72,7 @@ public class GameController : MonoBehaviour
         level++;
         
         // Increment emission rate
-        emissionRate = level < 8 ? emissionRate - 0.0375f : emissionRate;
+        emissionRate = level < Constants.MaxLevelCapForIncrease ? emissionRate - Constants.EmissionRateDecrease : emissionRate;
 
         // Adjust color
         _currentColorIndex++;

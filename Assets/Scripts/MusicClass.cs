@@ -3,10 +3,6 @@ using UnityEngine;
 public class MusicClass : MonoBehaviour
 {
     // For PlayerPrefs
-    private const string Music = "music";
-    private const string Sfx = "sfx";
-    private const string Off = "off";
-    private const string On = "on";
     private AudioSource _musicAudioSource;
     
     // Audio/Sfx
@@ -20,19 +16,19 @@ public class MusicClass : MonoBehaviour
         _musicAudioSource = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
         
         // Set PlayerPrefs variables if not set
-        if (!PlayerPrefs.HasKey(Music))
+        if (!PlayerPrefs.HasKey(Constants.Music))
         {
-            PlayerPrefs.SetString(Music, On);
+            PlayerPrefs.SetString(Constants.Music, Constants.On);
             _musicAudioSource.Play();
         }
-        else if (PlayerPrefs.GetString(Music, On) == On)
+        else if (PlayerPrefs.GetString(Constants.Music, Constants.On) == Constants.On)
         {
             _musicAudioSource.Play();
         }
         
-        if (!PlayerPrefs.HasKey(Sfx))
+        if (!PlayerPrefs.HasKey(Constants.Sfx))
         {
-            PlayerPrefs.SetString(Sfx, On);
+            PlayerPrefs.SetString(Constants.Sfx, Constants.On);
         }
         PlayerPrefs.Save();
     }
@@ -40,30 +36,30 @@ public class MusicClass : MonoBehaviour
     public void ToggleMusic()
     {
         // If the music is playing
-        if (PlayerPrefs.GetString(Music, On) == On)
+        if (PlayerPrefs.GetString(Constants.Music, Constants.On) == Constants.On)
         {
             _musicAudioSource.Pause();
-            PlayerPrefs.SetString(Music, Off);
+            PlayerPrefs.SetString(Constants.Music, Constants.Off);
         }
         else
         {
             _musicAudioSource.Play();
-            PlayerPrefs.SetString(Music, On);
+            PlayerPrefs.SetString(Constants.Music, Constants.On);
         }
         PlayerPrefs.Save();
-        print(PlayerPrefs.GetString(Music, On));
+        print(PlayerPrefs.GetString(Constants.Music, Constants.On));
     }
     
     public void ToggleSfx()
     {
         // If the Sfx is on
-        PlayerPrefs.SetString(Sfx, PlayerPrefs.GetString(Sfx, On) == On ? Off : On);
+        PlayerPrefs.SetString(Constants.Sfx, PlayerPrefs.GetString(Constants.Sfx, Constants.On) == Constants.On ? Constants.Off : Constants.On);
         PlayerPrefs.Save();
-        print(PlayerPrefs.GetString(Sfx, On));
+        print(PlayerPrefs.GetString(Constants.Sfx, Constants.On));
     }
 
     public static void PlayExplosion()
     {
-        if(PlayerPrefs.GetString(Sfx, On) == On) _source.Play();
+        if(PlayerPrefs.GetString(Constants.Sfx, Constants.On) == Constants.On) _source.Play();
     }
 }

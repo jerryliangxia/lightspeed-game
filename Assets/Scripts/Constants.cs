@@ -3,6 +3,7 @@ using UnityEngine;
 
 public static class Constants
 {
+    // Color Emission
     private static readonly Color CosmicRed = new (0.8f, 0.0f, 0.2f);
     private static readonly Color CosmicOrange = new (1.0f, 0.5f, 0.2f);
     private static readonly Color CosmicYellow = new (1.0f, 0.8f, 0.2f);
@@ -30,4 +31,15 @@ public static class Constants
         new[] { CosmicPink, CosmicMagenta },
         new[] { CosmicMagenta, CosmicPurple }
     };
+    
+    // Music Class
+    public const string Music = "music";
+    public const string Sfx = "sfx";
+    public const string Off = "off";
+    public const string On = "on";
+    
+    // Game Controller
+    public const int MaxLevelCapForIncrease = 8;
+    public const float EmissionRateDecrease = 0.0375f;
+    public const float StartEmissionRate = 0.4f;
 }
