@@ -16,20 +16,13 @@ public class PlayerController : MonoBehaviour
     // Explosions
     public GameObject explosionEffect;
     private Coroutine _explosionCoroutine;
-    
-    // Invincibility prefab
-    private ParticleSystem _planetPassEffect;
-    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
-    
+
     // Audio/Sfx
     public AudioSource source;
     public AudioClip explosionSfx;
 
     private void Start()
     {
-        // Particle effect for close calls
-        _planetPassEffect = GameObject.Find("PlanetPassEffect").GetComponent<ParticleSystem>();
-        
         // Sfx
         source.clip = explosionSfx;
     }
@@ -59,12 +52,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // if (GameController.Instance.isLevelingUp)
-        // {
-        //     EmitInvincibilityParticles();
-        //     return;
-        // }
-    
         // Instantiate the explosion effect at the collision position
         Instantiate(explosionEffect, gameObject.transform.position, Quaternion.identity);
         
@@ -78,17 +65,6 @@ public class PlayerController : MonoBehaviour
     
         // Show the restart UI prompt (you can implement this part separately)
         GameController.Instance.GameOver();
-    }
-    
-    private void EmitInvincibilityParticles()
-    {
-        print("From Emit Invincibility Particles: " + GameController.Instance.isLevelingUp);
-        // var ps = invincibilityPrefab.GetComponent<ParticleSystem>().main.startColor;
-        _planetPassEffect.GetComponent<Material>().color = Color.red;
-        // var planetPassEffectMainModule = _planetPassEffect.main;
-        // // planetPassEffectMainModule.startColor = GameController.Instance.currentColor[0];
-        // planetPassEffectMainModule.startColor = Color.red;
-        _planetPassEffect.Play();
     }
 }
 
