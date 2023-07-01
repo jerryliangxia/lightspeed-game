@@ -11,15 +11,20 @@ public class PlayerController : MonoBehaviour
     // Explosions
     public GameObject explosionEffect;
     private Coroutine _explosionCoroutine;
+    private static readonly int CosmicEmissionColor = Shader.PropertyToID("_EmissionColor");
 
     // Audio/Sfx
     public AudioSource source;
     public AudioClip explosionSfx;
-
+    
     private void Start()
     {
         // Sfx
         source.clip = explosionSfx;
+        
+        // Set the explosion color to white (base color)
+        var pem = explosionEffect.GetComponent<Renderer>().sharedMaterial;
+        pem.SetColor(CosmicEmissionColor, Color.white);
     }
 
     private void Update()
@@ -48,6 +53,13 @@ public class PlayerController : MonoBehaviour
     // Handle death of player
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Set the explosion color to current colors
+        if (GameController.Instance.isLevelingUp)
+        {
+            var pemBase = explosionEffect.GetComponent<Renderer>().sharedMaterial;
+            pemBase.SetColor(CosmicEmissionColor, GameController.Instance.currentColor[0]); 
+        }
+
         // Instantiate the explosion effect at the collision position
         Instantiate(explosionEffect, gameObject.transform.position, Quaternion.identity);
         

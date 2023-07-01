@@ -25,10 +25,10 @@ public class ChargeUpController : MonoBehaviour
     public GameObject center;
     public float proximityRadius = 3.0f;
     public TextMeshProUGUI invincibleText;
-    private ParticleSystem _particleSystemCollider;
-    private ParticleSystem.MainModule _particleSystemOriginal;
+    private ParticleSystem _gainParticleSystem;
+    private ParticleSystem.MainModule _baseParticleSystem;
     private float _score;
-    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+    private static readonly int CosmicEmissionColor = Shader.PropertyToID("_EmissionColor");
 
     // Start is called before the first frame update
     private void Start()
@@ -36,11 +36,11 @@ public class ChargeUpController : MonoBehaviour
         transform.localScale *= multiplicationFactor;
         _triggeredObjects = new HashSet<Collider2D>();
         
-        // Particle effect for close calls
-        _particleSystemCollider = GameObject.Find("GainParticleEffect").GetComponent<ParticleSystem>();
+        // Particle effect for close calls (can change colors)
+        _gainParticleSystem = GameObject.Find("GainParticleEffect").GetComponent<ParticleSystem>();
         
-        // Normal particle effect on object
-        _particleSystemOriginal = GameObject.Find("2DSpeedEffect_PS").GetComponent<ParticleSystem>().main;
+        // Base particle effect on object (can change colors)
+        _baseParticleSystem = GameObject.Find("BaseParticleEffect").GetComponent<ParticleSystem>().main;
 
         // Set background image and invincible text to invisible
         imageObject.GetComponent<Image>().CrossFadeAlpha(0f, 0f, true);
@@ -68,9 +68,9 @@ public class ChargeUpController : MonoBehaviour
         if (PauseMenu.IsPaused) return;
         if (_triggeredObjects.Count != 0)
         {
-            if (!_particleSystemCollider.isPlaying)
+            if (!_gainParticleSystem.isPlaying)
             {
-                _particleSystemCollider.Play();
+                _gainParticleSystem.Play();
             }
 
             var multiplier = GameController.Instance.level < 14 ? -0.25 * (GameController.Instance.level + 1) + 5 : 1.5;
@@ -80,7 +80,7 @@ public class ChargeUpController : MonoBehaviour
         }
         else
         {
-            _particleSystemCollider.Stop();
+            _gainParticleSystem.Stop();
         }
         
         if (Vector3.Distance(player.transform.position, center.transform.position) <= proximityRadius)
@@ -114,7 +114,7 @@ public class ChargeUpController : MonoBehaviour
         GameController.Instance.isLevelingUp = true; // For planet prefabs
         
         // Control color rendering
-        var gainParticleEffectMainModule = _particleSystemCollider.main;
+        var gainParticleEffectMainModule = _gainParticleSystem.main;
         var playerMeshRenderer = player.GetComponent<MeshRenderer>();
     
         // Rapidly change colors
@@ -124,9 +124,9 @@ public class ChargeUpController : MonoBehaviour
         {
             var colorIndex = Mathf.FloorToInt(GameController.Instance.levelIncrement / Constants.ColorFlashDuration) % GameController.Instance.currentColor.Length;
             currentColor = GameController.Instance.currentColor[colorIndex];
-            playerMeshRenderer.material.SetColor(EmissionColor, currentColor);
+            playerMeshRenderer.material.SetColor(CosmicEmissionColor, currentColor);
             invincibleText.color = currentColor;
-            _particleSystemOriginal.startColor = currentColor; // Set particle system color
+            _baseParticleSystem.startColor = currentColor; // Set particle system color
             gainParticleEffectMainModule.startColor = currentColor; // Set near miss particle system color
             yield return null;
         }
@@ -143,13 +143,13 @@ public class ChargeUpController : MonoBehaviour
         {
             var t = (GameController.Instance.levelIncrement - 1) / colorFadeDuration;
             currentColor = Color.Lerp(startColor, endColor, t);
-            player.GetComponent<MeshRenderer>().material.SetColor(EmissionColor, currentColor);
-            _particleSystemOriginal.startColor = currentColor; // Set particle system color
+            player.GetComponent<MeshRenderer>().material.SetColor(CosmicEmissionColor, currentColor);
+            _baseParticleSystem.startColor = currentColor; // Set particle system color
             gainParticleEffectMainModule.startColor = currentColor; // Set near miss particle system color
             yield return null;
         }
 
-        player.GetComponent<MeshRenderer>().material.SetColor(EmissionColor, endColor);
+        player.GetComponent<MeshRenderer>().material.SetColor(CosmicEmissionColor, endColor);
         GameController.Instance.isLevelingUp = false; // For planet prefabs
     }
 }
