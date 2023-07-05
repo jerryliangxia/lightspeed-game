@@ -19,12 +19,8 @@ public class MusicClass : MonoBehaviour
         if (!PlayerPrefs.HasKey(Constants.Music))
         {
             PlayerPrefs.SetString(Constants.Music, Constants.On);
-            _musicAudioSource.Play();
         }
-        else if (PlayerPrefs.GetString(Constants.Music, Constants.On) == Constants.On)
-        {
-            _musicAudioSource.Play();
-        }
+        _musicAudioSource.Play();
         
         if (!PlayerPrefs.HasKey(Constants.Sfx))
         {
@@ -60,6 +56,8 @@ public class MusicClass : MonoBehaviour
 
     public static void PlayExplosion()
     {
-        if(PlayerPrefs.GetString(Constants.Sfx, Constants.On) == Constants.On) _source.Play();
+        if (PlayerPrefs.GetInt("SfxToggledOn", 1) != 1) return;
+        _source.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 0.0f);
+        _source.Play();
     }
 }
