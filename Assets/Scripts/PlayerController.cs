@@ -64,13 +64,21 @@ public class PlayerController : MonoBehaviour
         Instantiate(explosionEffect, gameObject.transform.position, Quaternion.identity);
         
         // Play the "Hand Gun 1" sound effect
-        MusicClass.PlayExplosion();
+        PlayExplosion();
     
         // Set game object active to false
         gameObject.SetActive(false);
     
         // Show the restart UI prompt (you can implement this part separately)
         GameController.Instance.GameOver();
+    }
+    
+    // Play the explosion sound effect
+    private void PlayExplosion()
+    {
+        if (PlayerPrefs.GetInt("SfxToggledOn", 1) != 1) return;
+        source.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
+        source.Play();
     }
 }
 
