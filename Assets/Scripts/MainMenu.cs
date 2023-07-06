@@ -6,24 +6,47 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public bool musicToggledOn;
-    public bool sfxToggledOn;
-    
+    public GameObject musicSource;
+
     public Slider musicSlider;
     public TextMeshProUGUI musicSliderText;
-    public GameObject musicSource;
     
     public Slider sfxSlider;
     public TextMeshProUGUI sfxSliderText;
 
     private void Awake()
     {
-        musicSource.GetComponent<AudioSource>().Play();
-        musicToggledOn = true;
-        sfxToggledOn = true;
+        // If the player has just started the game for the first time
+        if (!PlayerPrefs.HasKey("MusicToggledOn"))
+        {
+            // Set the toggle variables to "On" (1)
+            PlayerPrefs.SetInt("MusicToggledOn", 1);
+            PlayerPrefs.SetInt("SfxToggledOn", 1);
+
+            // Set the float variables to full values (1.0f)
+            PlayerPrefs.SetFloat("MusicVolumeValue", 1f);
+            PlayerPrefs.SetFloat("SfxVolumeValue", 1f);
+        }
+
+        // Set the music volume and play
+        musicSource.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("MusicVolumeValue", 1f);
+        if (PlayerPrefs.GetInt("MusicToggledOn") == 1)
+        {
+            musicSource.GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            musicSliderText.text = "Music: Off";
+            DisableSlider(musicSlider);
+        }
         
-        // TODO not sure about this
-        PlayerPrefs.SetInt("SfxToggledOn", 1);
+        // If sfx is off
+        if (PlayerPrefs.GetInt("SfxToggledOn") == 0)
+        {
+            musicSliderText.text = "Sfx: Off";
+            DisableSlider(sfxSlider);
+        }
+        // PlayerPrefs.Save();
     }
     
     // Start is called before the first frame update
@@ -45,40 +68,48 @@ public class MainMenu : MonoBehaviour
 
     public void MusicVolumeSlider(float volume)
     {
-        musicSliderText.text = "Music: " + volume.ToString("0.0");
         var musicVolumeValue = musicSlider.value;
         PlayerPrefs.SetFloat("MusicVolumeValue", musicVolumeValue);
+
+        musicSliderText.text =  musicSlider.value == 0 || PlayerPrefs.GetInt("MusicToggledOn") == 0 ? 
+            "Music: Off" : 
+            "Music: " + musicSlider.value.ToString("0.0");
         LoadValues();
     }
     
     public void SfxVolumeSlider(float volume)
     {
-        sfxSliderText.text = "Sfx: " + volume.ToString("0.0");
         var sfxVolumeValue = sfxSlider.value;
         PlayerPrefs.SetFloat("SfxVolumeValue", sfxVolumeValue);
+        
+        sfxSliderText.text =  sfxSlider.value == 0 || PlayerPrefs.GetInt("SfxToggledOn") == 0 ? 
+            "Sfx: Off" : 
+            "Sfx: " + sfxSlider.value.ToString("0.0");
         LoadValues();
     }
 
     public void ToggleMusic()
     {
-        if (musicToggledOn)
+        if (PlayerPrefs.GetInt("MusicToggledOn", 1) == 1 && PlayerPrefs.GetFloat("MusicVolumeValue") != 0.0f)
         {
+            PlayerPrefs.SetInt("MusicToggledOn", 0);
             musicSource.GetComponent<AudioSource>().Pause();
             musicSliderText.text = "Music: Off";
             DisableSlider(musicSlider);
         }
         else
         {
+            PlayerPrefs.SetInt("MusicToggledOn", 1);
             musicSource.GetComponent<AudioSource>().Play();
-            musicSliderText.text = "Music: " + musicSlider.value.ToString("0.0");
+            musicSliderText.text = musicSlider.value == 0 ? "Music: Off" : "Music: " + musicSlider.value.ToString("0.0");
             EnableSlider(musicSlider);
         }
-        musicToggledOn = !musicToggledOn;
+        // PlayerPrefs.Save();
     }
     
     public void ToggleSfx()
     {
-        if (sfxToggledOn)
+        if (PlayerPrefs.GetInt("SfxToggledOn", 1) == 1 && PlayerPrefs.GetFloat("SfxVolumeValue") != 0.0f)
         {
             PlayerPrefs.SetInt("SfxToggledOn", 0);
             sfxSliderText.text = "Sfx: Off";
@@ -87,30 +118,22 @@ public class MainMenu : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt("SfxToggledOn", 1);
-            sfxSliderText.text = "Sfx: " + sfxSlider.value.ToString("0.0");
+            sfxSliderText.text =  sfxSlider.value == 0 ? "Sfx: Off" : "Sfx: " + sfxSlider.value.ToString("0.0");
             EnableSlider(sfxSlider);
         }
-        sfxToggledOn = !sfxToggledOn;
+        // PlayerPrefs.Save();
     }
 
-    private static void DisableSlider(Selectable slider)
+    private static void DisableSlider(Component slider)
     {
-        // Set Slider to disabled
-        slider.interactable = false;
-        slider.enabled = false;
-            
         // Set the opacity to 50%
         var sliderColor = slider.GetComponentInChildren<Image>().color;
         sliderColor.a = 0.5f;
         slider.GetComponentInChildren<Image>().color = sliderColor;
     }
 
-    private static void EnableSlider(Selectable slider)
+    private static void EnableSlider(Component slider)
     {
-        // Set Slider to enabled
-        slider.interactable = true;
-        slider.enabled = true;
-            
         // Set the opacity to 100%
         var sliderColor = slider.GetComponentInChildren<Image>().color;
         sliderColor.a = 1f;
@@ -125,5 +148,6 @@ public class MainMenu : MonoBehaviour
 
         var sfxVolumeValue = PlayerPrefs.GetFloat("SfxVolumeValue");
         sfxSlider.value = sfxVolumeValue;
+        // PlayerPrefs.Save();
     }
 }
