@@ -43,10 +43,9 @@ public class MainMenu : MonoBehaviour
         // If sfx is off
         if (PlayerPrefs.GetInt("SfxToggledOn") == 0)
         {
-            musicSliderText.text = "Sfx: Off";
+            sfxSliderText.text = "Sfx: Off";
             DisableSlider(sfxSlider);
         }
-        // PlayerPrefs.Save();
     }
     
     // Start is called before the first frame update
@@ -121,7 +120,6 @@ public class MainMenu : MonoBehaviour
             sfxSliderText.text =  sfxSlider.value == 0 ? "Sfx: Off" : "Sfx: " + sfxSlider.value.ToString("0.0");
             EnableSlider(sfxSlider);
         }
-        // PlayerPrefs.Save();
     }
 
     private static void DisableSlider(Component slider)
@@ -148,6 +146,5 @@ public class MainMenu : MonoBehaviour
 
         var sfxVolumeValue = PlayerPrefs.GetFloat("SfxVolumeValue");
         sfxSlider.value = sfxVolumeValue;
-        // PlayerPrefs.Save();
     }
 }

@@ -89,8 +89,9 @@ public class ChargeUpController : MonoBehaviour
         }
 
         if (!(slider.value >= 100)) return;
-        
-        StartCoroutine(ShowAndHideImage());
+
+        _imageFadeCoroutine ??= null;
+        _imageFadeCoroutine = StartCoroutine(ShowAndHideImage());
         slider.value = 0f;
 
         // Activate player GameObject's isTrigger effect for 2 seconds
@@ -99,14 +100,28 @@ public class ChargeUpController : MonoBehaviour
     
     private IEnumerator ShowAndHideImage()
     {
+        var image = imageObject.GetComponent<Image>();
+
+        // Set the desired color with the desired alpha value
+        var targetColor = Color.white;
+        if (GameController.Instance.currentColor.Length != 0)
+        {
+            targetColor = GameController.Instance.currentColor[Random.Range(0, GameController.Instance.currentColor.Length)]; // White color with 0 alpha (fully transparent)
+
+        }
+
+        // Set the initial color of the image
+        image.color = targetColor;
+
         // Fade in
-        imageObject.GetComponent<Image>().CrossFadeAlpha(1f, 0f, true);
+        image.CrossFadeColor(Color.white, 0f, true, true);
         yield return new WaitForSeconds(visibleDuration / 1000f);
 
         // Fade out
-        imageObject.GetComponent<Image>().CrossFadeAlpha(0f, fadeDuration, true);
+        image.CrossFadeColor(targetColor, fadeDuration, true, true);
         yield return new WaitForSeconds(invisibleDuration / 1000f);
     }
+
 
     private IEnumerator ActivatePlayerTriggerEffect()
     {
