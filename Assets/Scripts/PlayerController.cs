@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Singleton instance
+    public static PlayerController Instance { get; private set; }
+    
     // Position and Rotation Parameters
     public Transform centerObject; // Reference to the center object
     public float minSize = 0.05f; // Minimum size of the player
@@ -13,15 +16,20 @@ public class PlayerController : MonoBehaviour
     private Coroutine _explosionCoroutine;
     private static readonly int CosmicEmissionColor = Shader.PropertyToID("_EmissionColor");
 
-    // Audio/Sfx
-    public AudioSource source;
-    public AudioClip explosionSfx;
-    
+    public void Awake()
+    {
+        // Set the instance to this object (used for explosion prefab set to white)
+        PlayerController save = null;
+        if (Instance != null && Instance != this)
+        {
+            save = Instance;
+        }
+        Instance = this;
+        
+        Destroy(save);
+    }
     private void Start()
     {
-        // Sfx
-        source.clip = explosionSfx;
-        
         // Set the explosion color to white (base color)
         var pem = explosionEffect.GetComponent<Renderer>().sharedMaterial;
         pem.SetColor(CosmicEmissionColor, Color.white);
@@ -64,21 +72,13 @@ public class PlayerController : MonoBehaviour
         Instantiate(explosionEffect, gameObject.transform.position, Quaternion.identity);
         
         // Play the "Hand Gun 1" sound effect
-        PlayExplosion();
+        GameController.Instance.PlayExplosion();
     
         // Set game object active to false
         gameObject.SetActive(false);
     
         // Show the restart UI prompt (you can implement this part separately)
         GameController.Instance.GameOver();
-    }
-    
-    // Play the explosion sound effect
-    private void PlayExplosion()
-    {
-        if (PlayerPrefs.GetInt("SfxToggledOn", 1) != 1) return;
-        source.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
-        source.Play();
     }
 }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour
 {
@@ -20,9 +21,17 @@ public class GameController : MonoBehaviour
     public float emissionRate;
 
     // Color Emission
-    private int _currentColorIndex;
+    public int currentColorIndex;
     public Color[] currentColor;
-
+    
+    // Audio effect
+    public AudioSource audioSource;
+    public GameObject explosionSfx;
+    private AudioSource _explosionAudioSource;
+    public AudioClip levelUpClip;
+    public AudioClip explosionClip;
+    public AudioClip startClip;
+    
     private void Awake()
     {
         // Set the instance to this object
@@ -37,6 +46,22 @@ public class GameController : MonoBehaviour
         emissionRate = Constants.StartEmissionRate;
 
         Destroy(save);
+        
+        // For build up audio source
+        audioSource = gameObject.GetComponent<AudioSource>();
+        if (PlayerPrefs.GetInt("SfxToggledOn", 1) == 1)
+        {
+            audioSource.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
+            audioSource.clip = startClip;
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.volume = 0f;
+        }
+        
+        // For explosion audio source
+        _explosionAudioSource = explosionSfx.GetComponent<AudioSource>();
     }
 
     public void Start()
@@ -70,16 +95,31 @@ public class GameController : MonoBehaviour
         // Increment level
         levelIncrement = 0f;
         level++;
-        
+        if (PlayerPrefs.GetInt("SfxToggledOn", 1) == 1)
+        {
+            audioSource.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
+            audioSource.clip = levelUpClip;
+            audioSource.Play();
+        }
+
         // Increment emission rate
         emissionRate = level < Constants.MaxLevelCapForIncrease ? emissionRate - Constants.EmissionRateDecrease : emissionRate;
 
         // Adjust color
-        _currentColorIndex++;
-        if (_currentColorIndex >= Constants.Colors.Count)
+        currentColorIndex++;
+        if (currentColorIndex >= Constants.Colors.Count)
         {
-            _currentColorIndex = 0; // Reset to the first color set if reached the end
+            currentColorIndex = 0; // Reset to the first color set if reached the end
         }
-        currentColor = Constants.Colors[_currentColorIndex];
+        currentColor = Constants.Colors[currentColorIndex];
+    }
+    
+    // Play the explosion sound effect
+    public void PlayExplosion()
+    {
+        if (PlayerPrefs.GetInt("SfxToggledOn", 1) != 1) return; 
+        _explosionAudioSource.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
+        _explosionAudioSource.clip = explosionClip;
+        _explosionAudioSource.Play();
     }
 }
