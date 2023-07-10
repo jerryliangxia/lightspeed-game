@@ -601,11 +601,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 57776d09872584564a32acb180e80006, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 29fc05aa9125f4a66990d8cb821e05bd, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3516,8 +3516,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: -168}
-  m_SizeDelta: {x: 240, y: 48}
+  m_AnchoredPosition: {x: 120, y: -194}
+  m_SizeDelta: {x: 240, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1541313205
 Animator:
@@ -3718,8 +3718,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: -72}
-  m_SizeDelta: {x: 240, y: 48}
+  m_AnchoredPosition: {x: 120, y: -46}
+  m_SizeDelta: {x: 240, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1612444532
 MonoBehaviour:
@@ -4448,8 +4448,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 240, y: 48}
-  m_Spacing: {x: 0, y: 0}
+  m_CellSize: {x: 240, y: 72}
+  m_Spacing: {x: 0, y: 12}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &1918762101
@@ -4725,7 +4725,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 120, y: -120}
-  m_SizeDelta: {x: 240, y: 48}
+  m_SizeDelta: {x: 240, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2109220564
 MonoBehaviour:
@@ -4747,12 +4747,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '"Space X-plorers" Kevin MacLeod (incompetech.com)
+  m_text: 'Main Menu: "Legend" Music by Karl Casey @ White Bat Audio
 
-    Licensed under
-    Creative Commons: By Attribution 4.0 License
+    Game: Synthwave
+    by EVA
 
-    http://creativecommons.org/licenses/by/4.0/'
+    https://joshlis.bandcamp.com
+
+    Promoted by @RoyaltyFreePlanet
+    - https://royaltyfreeplanet.com
+
+    Creative Commons Attribution 3.0
+
+    http://bit.ly/RFP_CClicense'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84232a5a409c946fb882b36bb2642b67, type: 2}
   m_sharedMaterial: {fileID: -2748410580164075530, guid: 84232a5a409c946fb882b36bb2642b67, type: 2}
@@ -4779,8 +4786,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 10.5
+  m_fontSizeBase: 10.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
