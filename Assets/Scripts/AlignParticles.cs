@@ -6,9 +6,11 @@ public class AlignParticles : MonoBehaviour
     public GameObject speedEffect;
     private ParticleSystem _particleSystem; // Reference to the Particle System component
     private ParticleSystem.ShapeModule _shapeModule; // Reference to the Shape Module of the Particle System
-    public float minEmissionRate = 10f; // Minimum emission rate of the Particle System
-    public float maxEmissionRate = 50f; // Maximum emission rate of the Particle System
-    public float maxDistance = 10f; // Maximum distance at which the emission rate is at the minimum value
+    
+    // Public variables
+    public float minEmissionRate = 5f; // Minimum emission rate of the Particle System
+    public float maxEmissionRate = 75f; // Maximum emission rate of the Particle System
+    public float maxDistance = 10f;     // Maximum distance at which the emission rate is at the minimum value
 
     private void Start()
     {

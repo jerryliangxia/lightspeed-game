@@ -13,9 +13,9 @@ public class ProjectileLauncher : MonoBehaviour
     public int projectileTargetSpeedMultiplier = 4; // For growing the projectile
     
     // Speeds, distance and rate
-    public float minSpeed = 5.0f;
-    public float maxSpeed = 15.0f;
-    public int maxDistance = 100;
+    public float minSpeed = 4.0f;
+    public float maxSpeed = 6.0f;
+    public int maxDistance = 10;
     private float _emissionTimer; // Rate in which projectiles are launched. Goes from 0.4 to 0.1 over 8 level ups
 
     private int _index; // For projectile array (re-use)

@@ -4,11 +4,11 @@ public class CameraController : MonoBehaviour
 {
     public Transform player; // Reference to the player's transform
     public Transform centerObject; // Reference to the center object's transform
-    public float followSpeed = 5f; // Speed at which the camera follows the player
-    public float maxZoom = 10f; // Maximum zoom level
-    public float minZoom = 2f; // Minimum zoom level
-    public float zoomSpeed = 5f; // Speed at which the camera zooms
-    public float maxZoomDistance = 15f; // Maximum distance for zooming
+    public float followSpeed = 3f; // Speed at which the camera follows the player
+    public float minZoom = 3f; // Minimum zoom level
+    public float maxZoom = 11f; // Maximum zoom level
+    public float zoomSpeed = 3f; // Speed at which the camera zooms
+    public float maxZoomDistance = 20f; // Maximum distance for zooming
 
     private Camera _mainCamera; // Reference to the camera component
 

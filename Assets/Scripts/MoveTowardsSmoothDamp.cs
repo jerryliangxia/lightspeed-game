@@ -3,9 +3,9 @@ using UnityEngine;
 public class MoveTowardsSmoothDamp : MonoBehaviour
 {
     public float maxMoveSpeed = 100f;
-    public float smoothTime = 1.0f;
-    public Vector2 regionMin;
-    public Vector2 regionMax;
+    public float smoothTime = 0.2f;
+    public Vector2 regionMin = new (-20.0f, -20.0f);
+    public Vector2 regionMax = new (20.0f, 20.0f);
     private Camera _mainCamera;
 
     private Vector2 _currentVelocity;

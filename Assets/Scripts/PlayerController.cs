@@ -6,10 +6,10 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance { get; private set; }
     
     // Position and Rotation Parameters
-    public Transform centerObject; // Reference to the center object
-    public float minSize = 0.05f; // Minimum size of the player
-    public float maxSize = 6f; // Maximum size of the player
-    public float maxDistance = 40f; // Maximum distance at which the player is at the minimum size
+    public Transform centerObject;  // Reference to the center object
+    public float minSize = 0.1f;    // Minimum size of the player (min size tested: 0.05f)
+    public float maxSize = 0.5f;    // Maximum size of the player (max size tested: 1.0f)
+    public float maxDistance = 50f; // Maximum distance at which the player is at the minimum size (max size tested: 100f)
 
     // Explosions
     public GameObject explosionEffect;
