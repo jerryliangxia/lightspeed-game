@@ -41,6 +41,7 @@ public class MainMenu : MonoBehaviour
         if (PlayerPrefs.GetInt(MusicToggledOn) == 1)
         {
             musicSource.GetComponent<AudioSource>().Play();
+            musicSliderText.text = "Music: " + PlayerPrefs.GetFloat(MusicVolumeValue).ToString("0.0");
         }
         else
         {
@@ -49,7 +50,11 @@ public class MainMenu : MonoBehaviour
         }
         
         // If sfx is off
-        if (PlayerPrefs.GetInt(SfxToggledOn) == 0)
+        if (PlayerPrefs.GetInt(SfxToggledOn) == 1)
+        {
+            sfxSliderText.text = "Sfx: " + PlayerPrefs.GetFloat(SfxVolumeValue).ToString("0.0");
+        }
+        else
         {
             sfxSliderText.text = "Sfx: Off";
             DisableSlider(sfxSlider);
