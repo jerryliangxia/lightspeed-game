@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
     public Slider sfxSlider;
     public TextMeshProUGUI sfxSliderText;
 
-    private bool _awakeExecuted = false;
+    private bool _awakeExecuted;
     
     // CONSTANTS
     private const string MusicToggledOn = "MusicToggledOn";

@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class GameOverScreen : MonoBehaviour
 {
-    // Singleton instance
-    public TextMeshProUGUI pointsText;
-    
     // Game objects
     public GameObject playerObject;
     public GameObject baseParticleEffect;
@@ -17,11 +14,21 @@ public class GameOverScreen : MonoBehaviour
     // UI
     public Slider slider;
     public GameObject imageObject;
-    
+    public TextMeshProUGUI pointsText;
+
     public void Setup(int level)
     {
         gameObject.SetActive(true);
-        pointsText.text = "Score: " + level;
+        if (GameController.Instance.newHighScoreAchieved)
+        {
+            pointsText.fontSize = 23f;
+            pointsText.text = "New High Score! Level " + level;
+        }
+        else
+        {
+            pointsText.fontSize = 24f;
+            pointsText.text = "Score: " + level;
+        }
     }
 
     public void RestartButton()
@@ -33,14 +40,17 @@ public class GameOverScreen : MonoBehaviour
         GameController.Instance.level = 0;
         GameController.Instance.isLevelingUp = false;
         GameController.Instance.levelIncrement = 0f;
-
-        GameController.Instance.pointsText.text = "0";
+        
+        GameController.Instance.pointsText.text = "Level 0";
         GameController.Instance.gameOverScreen.gameObject.SetActive(false);
         GameController.Instance.isGameOver = false;
         
         GameController.Instance.emissionRate = 0.4f;
         GameController.Instance.currentColorIndex = 0;
         GameController.Instance.audioSource.clip = GameController.Instance.startClip;
+
+        GameController.Instance.highScoreText.text = "High Score: " + PlayerPrefs.GetInt(Constants.HighScore);
+        GameController.Instance.newHighScoreAchieved = false;
 
         // Player
         playerObject.SetActive(true);

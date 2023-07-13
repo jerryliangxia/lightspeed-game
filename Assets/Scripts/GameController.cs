@@ -32,6 +32,10 @@ public class GameController : MonoBehaviour
     public AudioClip explosionClip;
     public AudioClip startClip;
     
+    // High Score
+    public TextMeshProUGUI highScoreText;
+    public bool newHighScoreAchieved;
+
     private void Awake()
     {
         // Set the instance to this object
@@ -62,10 +66,17 @@ public class GameController : MonoBehaviour
         
         // For explosion audio source
         _explosionAudioSource = explosionSfx.GetComponent<AudioSource>();
+        
+        // For testing high score
+        // PlayerPrefs.SetInt(Constants.HighScore, 1);
     }
 
     public void Start()
     {
+        pointsText.text = "Level 0";
+        
+        // For pause menu
+        highScoreText.text = "High Score: " + PlayerPrefs.GetInt(Constants.HighScore, 0);
         Cursor.visible = false;
     }
 
@@ -80,10 +91,8 @@ public class GameController : MonoBehaviour
         gameOverScreen.Setup(level);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        pointsText.text = "Level " + level;
-
         if (isLevelingUp)
         {
             levelIncrement += Time.deltaTime;
@@ -112,6 +121,22 @@ public class GameController : MonoBehaviour
             currentColorIndex = 0; // Reset to the first color set if reached the end
         }
         currentColor = Constants.Colors[currentColorIndex];
+        
+        // Set the text for the amount of levels passed
+        pointsText.text = "Level " + level;
+
+        // See if high score
+        if (level > PlayerPrefs.GetInt(Constants.HighScore, 0))
+        {
+            NewHighScoreAchieved();
+        }
+    }
+    
+    public void NewHighScoreAchieved()
+    {
+        PlayerPrefs.SetInt(Constants.HighScore, level);
+        highScoreText.text = "New High Score: " + level;
+        newHighScoreAchieved = true;
     }
     
     // Play the explosion sound effect

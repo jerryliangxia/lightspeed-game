@@ -77,6 +77,12 @@ public class PlayerController : MonoBehaviour
         // Set game object active to false
         gameObject.SetActive(false);
     
+        // See if high score
+        if (GameController.Instance.level > PlayerPrefs.GetInt(Constants.HighScore, 0))
+        {
+            GameController.Instance.NewHighScoreAchieved();
+        }
+        
         // Show the restart UI prompt (you can implement this part separately)
         GameController.Instance.GameOver();
     }

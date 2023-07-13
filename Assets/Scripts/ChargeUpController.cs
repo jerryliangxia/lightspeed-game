@@ -150,7 +150,7 @@ public class ChargeUpController : MonoBehaviour
         player.GetComponent<MeshRenderer>().enabled = true;
 
         const float colorFadeDuration = 1f; // Duration of fade effect
-        var startColor = GameController.Instance.currentColor[UnityEngine.Random.Range(0, GameController.Instance.currentColor.Length)];
+        var startColor = GameController.Instance.currentColor[Random.Range(0, GameController.Instance.currentColor.Length)];
         var endColor = Color.white;
         invincibleText.color = Color.white;
 

@@ -36,4 +36,7 @@ public static class Constants
     public const int MaxLevelCapForIncrease = 8;
     public const float EmissionRateDecrease = 0.0375f;
     public const float StartEmissionRate = 0.4f;
+    
+    // High Score
+    public const string HighScore = "HighScore";
 }
