@@ -39,4 +39,14 @@ public static class Constants
     
     // High Score
     public const string HighScore = "HighScore";
+    
+    // Music and Sfx Constants
+    public const string MusicToggledOn = "MusicToggledOn";
+    public const string SfxToggledOn = "SfxToggledOn";
+    public const string MusicVolumeValue = "MusicVolumeValue";
+    public const string SfxVolumeValue = "SfxVolumeValue";
+    
+    // Scene Names
+    public const string MainMenuScene = "MainMenu";
+    public const string GameScene = "Game";
 }

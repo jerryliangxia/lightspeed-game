@@ -74,13 +74,13 @@ public class GameOverScreen : MonoBehaviour
         imageObject.GetComponent<Image>().CrossFadeColor(Color.white, 0.25f, true, true);
 
         // Play intro sound
-        if (PlayerPrefs.GetInt("SfxToggledOn", 1) != 1) return; 
-        GameController.Instance.audioSource.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
+        if (PlayerPrefs.GetInt(Constants.SfxToggledOn, 1) != 1) return; 
+        GameController.Instance.audioSource.volume = PlayerPrefs.GetFloat(Constants.SfxVolumeValue, 1f);
         GameController.Instance.audioSource.Play();
     }
     
     public void ExitButton()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(Constants.MainMenuScene);
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ChargeUpController : MonoBehaviour
 {
-    
     // Area in which the object generates charge
     public int multiplicationFactor = 2;
     public int visibleDuration = 500;

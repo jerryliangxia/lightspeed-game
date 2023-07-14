@@ -53,9 +53,9 @@ public class GameController : MonoBehaviour
         
         // For build up audio source
         audioSource = gameObject.GetComponent<AudioSource>();
-        if (PlayerPrefs.GetInt("SfxToggledOn", 1) == 1)
+        if (PlayerPrefs.GetInt(Constants.SfxToggledOn, 1) == 1)
         {
-            audioSource.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
+            audioSource.volume = PlayerPrefs.GetFloat(Constants.SfxVolumeValue, 1f);
             audioSource.clip = startClip;
             audioSource.Play();
         }
@@ -104,9 +104,9 @@ public class GameController : MonoBehaviour
         // Increment level
         levelIncrement = 0f;
         level++;
-        if (PlayerPrefs.GetInt("SfxToggledOn", 1) == 1)
+        if (PlayerPrefs.GetInt(Constants.SfxToggledOn, 1) == 1)
         {
-            audioSource.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
+            audioSource.volume = PlayerPrefs.GetFloat(Constants.SfxVolumeValue, 1f);
             audioSource.clip = levelUpClip;
             audioSource.Play();
         }
@@ -142,8 +142,8 @@ public class GameController : MonoBehaviour
     // Play the explosion sound effect
     public void PlayExplosion()
     {
-        if (PlayerPrefs.GetInt("SfxToggledOn", 1) != 1) return; 
-        _explosionAudioSource.volume = PlayerPrefs.GetFloat("SfxVolumeValue", 1f);
+        if (PlayerPrefs.GetInt(Constants.SfxToggledOn, 1) != 1) return; 
+        _explosionAudioSource.volume = PlayerPrefs.GetFloat(Constants.SfxVolumeValue, 1f);
         _explosionAudioSource.clip = explosionClip;
         _explosionAudioSource.Play();
     }
