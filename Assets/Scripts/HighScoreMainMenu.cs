@@ -18,5 +18,4 @@ public class HighScoreMainMenu : MonoBehaviour
             highScoreText.text = "";
         }
     }
-    
 }

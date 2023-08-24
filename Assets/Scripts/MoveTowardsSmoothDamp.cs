@@ -35,5 +35,4 @@ public class MoveTowardsSmoothDamp : MonoBehaviour
     
         transform.position = targetPosition;
     }
-
 }
